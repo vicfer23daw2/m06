@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>m06uf1ex1_exercici2</title>
+    <style>
+        table {
+            width: 100%;
+            border: solid;
+        }
+
+        tr>th {
+            background-color: #000606;
+            color: #ffffff;
+            height: 30px;
+        }
+
+        td {
+            border: 1px solid;
+        }
+
+        tr:hover {
+            background-color: #D6EEEE;
+        }
+
+        button {
+            margin: 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const capital = [
+            "Paris","Londres","Roma","Berlin","Copenhaguen","Viena","Lisboa","Washington_DC","Otawa"
+            ,"L'Havana","Santiago","Lima","Montevideo","Canberra","Wellington","Monròvia","Abuja","Dakar"
+            ,"Tunis","Tokyo","Seül","Beijing","Taipei"
+        ];
+        const pais = [
+            "França","UK","Itàlia","Alemanya","Dinamarca","Àustria","Portugal","USA","Canada","Cuba","Xile"
+            ,"Perú","Uruguay","Austràlia","Nova_Zelanda","Libèria","Nigèria","Senegal","Tunísia","Japó",
+            "Corea_Sud","Xina","Taiwan"
+        ];
+        const continent = [
+            "Europa","Europa","Europa","Europa","Europa","Europa","Europa","Amèrica","Amèrica","Amèrica","Amèrica",
+            "Amèrica","Amèrica","Oceania","Oceania","Àfrica","Àfrica","Àfrica","Àfrica","Àsia","Àsia","Àsia","Àsia"
+        ];
+
+        window.onload = function () {
+            let botoNovaTaula = document.getElementById("novaTaula"); // let botoNovaTaula = document.getElementsByTagName("button")[0];
+            let botoEsborraTaula = document.getElementById("esborraTaula"); // let botoEsborraTaula = document.getElementsByTagName("button")[1];
+            let taula = document.getElementById("taula"); // let taula = document.getElementsByTagName("table")[0];
+
+            botoNovaTaula.onclick = function () {
+                
+                let quantitatPaisosInput = document.getElementById("quantitatPaisos");
+                let quantitatPaisos = parseInt(quantitatPaisosInput.value); // Sin el parseInt puede funcionar igual pero es buena práctica ponerlo.
+
+                // Limpia la tabla en cada click antes de agregar filas nuevas
+                while (taula.rows.length > 1) {
+                    taula.deleteRow(1);
+                }
+
+                for (let i = 0; i < quantitatPaisos; i++) {
+
+                    let numRandom = Math.floor(Math.random() * capital.length); // Genera un número aleatorio en base al tamaño de uno de los array (en este ejercicio tienen el mismo tamaño y estan ordenados)
+                    let tr = document.createElement('tr');
+                    taula.appendChild(tr);
+
+                    // Añade la capital
+                    let tdCapital = document.createElement('td');
+                    tr.appendChild(tdCapital);
+                    let capitalSeleccionada = capital[numRandom];
+                    let capitalText = document.createTextNode(capitalSeleccionada);
+                    tdCapital.appendChild(capitalText);
+
+                    // Añade el país
+                    let tdPais = document.createElement('td');
+                    tr.appendChild(tdPais);
+                    let paisSeleccionado = pais[numRandom];
+                    let paisText = document.createTextNode(paisSeleccionado);
+                    tdPais.appendChild(paisText);
+
+                    // Añade el continente
+                    let tdContinente = document.createElement('td');
+                    tr.appendChild(tdContinente);
+                    let continenteSeleccionado = continent[numRandom];
+                    let continenteText = document.createTextNode(continenteSeleccionado);
+                    tdContinente.appendChild(continenteText);
+                }
+            }
+
+            botoEsborraTaula.onclick = function () {
+
+                while (taula.rows.length > 1) {
+                    taula.deleteRow(1);
+                }
+            }
+
+            // Gestiona con el evento blur el input para que no se pueda escribir manualmente un número fuera del rango permitido 
+            document.getElementById("quantitatPaisos").addEventListener("blur", function() { // blur --> cuando pierde el foco (haces click fuera del campo)
+                let valor = this.value;
+                if (valor < 1) {
+                    this.value = 1; 
+                } else if (valor > 10) {
+                    this.value = 10; 
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body>
+    <p>Entra la quantitat de països a visualitzar: <input type="number" min="1" max="10" id="quantitatPaisos"></p>
+    <h3>TAULA</h3>
+    <table id="taula">
+        <tr>
+            <th>Capital</th>
+            <th>País</th>
+            <th>Continent</th>
+        </tr>
+    </table>
+    <button type="button" id="novaTaula">Crea Nova Taula</button><button type="reset" id="esborraTaula">Esborra Taula</button>
+</body>
+
+</html>
